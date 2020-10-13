@@ -1,4 +1,4 @@
-var employee = class {
+let employee = class {
     constructor() {
         this.get_employee();
     }
@@ -87,7 +87,7 @@ var employee = class {
                 //
                 obj.get_employee();
                 alert("Actualizado Exitoso");
-                // obj.clear();
+                obj.clear();
             },
             error: (XMLHttpRequest, textStatus, errorThrown) => {
                 alert("Status: " + XMLHttpRequest.responseJSON.detail);
@@ -112,7 +112,7 @@ var employee = class {
     }
 }
 
-var obj = new employee();
+let obj = new employee();
 
 const post_emp = () =>{
     debugger;

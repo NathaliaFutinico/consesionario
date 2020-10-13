@@ -1,12 +1,90 @@
-// const img = document.getElementById('img');
+// CHAT
 
-// img.addEventListener('click', ()=>{
-//     img.classList.remove('chat__container__show');
-//     img.classList.add('chat__container__hide');
-//     img.style.diplay = 'none';
-// });
+var me = {};
+
+var you = {};
+
+function formatAMPM(date) {
+    var hours = date.getHours();
+    var minutes = date.getMinutes();
+    var ampm = hours >= 12 ? 'PM' : 'AM';
+    hours = hours % 12;
+    hours = hours ? hours : 12; // the hour '0' should be '12'
+    minutes = minutes < 10 ? '0'+minutes : minutes;
+    var strTime = hours + ':' + minutes + ' ' + ampm;
+    return strTime;
+}            
+
+//-- No use time. It is a javaScript effect.
+function insertChat(who, text, time = 0){
+    var control = "";
+    var date = formatAMPM(new Date());
+    
+    if (who == "me"){
+        
+        control = '<li style="width:100%">' +
+                        '<div class="msj macro">' +
+                            '<div class="text text-l">' +
+                                '<p>'+ text +'</p>' +
+                                '<p><small>'+date+'</small></p>' +
+                            '</div>' +
+                        '</div>' +
+                    '</li>';                    
+    }else{
+        control = '<li style="width:100%;">' +
+                        '<div class="msj-rta macro">' +
+                            '<div class="text text-r">' +
+                                '<p>'+text+'</p>' +
+                                '<p><small>'+date+'</small></p>' +
+                            '</div>' +
+                        '<div class="avatar" style="padding:0px 0px 0px 10px !important"></div>' +                                
+                  '</li>';
+    }
+    setTimeout(
+        function(){                        
+            $("#chat").append(control);
+        }, time);
+    
+}
+
+// function resetChat(){
+//     $("#chat").empty();
+// }
+
+$(".mytext").on("keyup", function(e){
+    if (e.which == 13){
+        var text = $(this).val();
+        if (text !== ""){
+            insertChat("me", text);              
+            $(this).val('');
+        }
+    }
+});
+
+// CHAT CLICK
+
+const img = document.getElementById('img');
+const frame = document.getElementById('frame');
+const chat = document.getElementById('chat__content');
+
+chat.addEventListener('click', (e) =>{
+    img.classList.remove('chat__img__off');
+    img.classList.add('chat__img');
+    frame.classList.remove('frame');
+    frame.classList.add('frame__off');
+    chat.style.display = 'none';
+});
+
+img.addEventListener('click', () =>{
+    img.classList.remove('chat__img');
+    img.classList.add('chat__img__off');
+    frame.classList.remove('frame__off');
+    frame.classList.add('frame');
+    chat.style.display = 'block';
+});
 
 
+// ROUTES
 
 let Go = (page) =>{
     switch (page) {
